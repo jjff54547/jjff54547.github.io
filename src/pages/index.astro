@@ -1,0 +1,196 @@
+---
+import { SITE_DESCRIPTION } from '../consts';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const latestPosts = posts.slice(0, 4);
+
+const categories = [
+  { title: 'AI & Python', desc: '机器学习、自动化、Python工具开发', emoji: '🤖', gradient: 'gradient-ocean', href: '/blog/tag/ai' },
+  { title: '外贸 & 出海', desc: '跨境经验、独立站、市场观察', emoji: '🌍', gradient: 'gradient-forest', href: '/blog/tag/trade' },
+  { title: '产品想法', desc: '产品构思、设计思考、产品拆解', emoji: '💡', gradient: 'gradient-warm', href: '/blog/tag/product' },
+  { title: '人生记录', desc: '日常思考、成长复盘、生活方式', emoji: '📝', gradient: 'gradient-sunset', href: '/blog/tag/life' },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title="吉福的实验室" description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+
+    <main>
+      <!-- Hero -->
+      <section class="hero container animate-in">
+        <h1>
+          土木生的<span class="gradient-text">跨界实验场</span>
+        </h1>
+        <p class="hero-sub">
+          不设边界。从AI到外贸，从代码到产品，这里记录我探索世界的全过程。
+        </p>
+        <div class="hero-actions">
+          <a href="/blog" class="btn btn-primary">探索文章</a>
+          <a href="/about" class="btn btn-outline">关于我</a>
+        </div>
+      </section>
+
+      <!-- Category Cards -->
+      <section class="categories container">
+        <h2 class="section-title animate-in">探索方向</h2>
+        <div class="card-grid">
+          {
+            categories.map((cat, i) => (
+              <a href={cat.href} class={`card cat-card cat-${cat.gradient} animate-in animate-in-delay-${i + 1}`}>
+                <span class="cat-emoji">{cat.emoji}</span>
+                <h3>{cat.title}</h3>
+                <p>{cat.desc}</p>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Latest Posts -->
+      <section class="posts container">
+        <h2 class="section-title animate-in">最新文章</h2>
+        {
+          latestPosts.length === 0 ? (
+            <p class="empty animate-in">还没有文章，马上开始写第一篇。</p>
+          ) : (
+            <div class="post-list">
+              {latestPosts.map((post, i) => (
+                <a href={`/blog/${post.slug}`} class={`card post-card animate-in animate-in-delay-${i + 1}`}>
+                  <span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
+                  <h3>{post.data.title}</h3>
+                  <p>{post.data.description}</p>
+                  {post.data.tags && post.data.tags.length > 0 && (
+                    <div class="post-tags">
+                      {post.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+                    </div>
+                  )}
+                </a>
+              ))}
+            </div>
+          )
+        }
+        {
+          posts.length > 4 && (
+            <div class="view-all">
+              <a href="/blog" class="btn btn-outline">查看全部文章 &rarr;</a>
+            </div>
+          )
+        }
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 80px 24px 60px;
+  }
+  .hero h1 {
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--c-text-secondary);
+    max-width: 520px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  /* Sections */
+  section { padding: 48px 0; }
+  .section-title {
+    text-align: center;
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+
+  /* Category Cards */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .cat-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    padding: 32px 24px;
+  }
+  .cat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .cat-card:hover::before { opacity: 1; }
+
+  .cat-gradient-ocean::before { background: var(--c-gradient-ocean); }
+  .cat-gradient-forest::before { background: var(--c-gradient-forest); }
+  .cat-gradient-warm::before { background: var(--c-gradient-warm); }
+  .cat-gradient-sunset::before { background: var(--c-gradient-sunset); }
+
+  .cat-emoji { font-size: 2rem; display: block; margin-bottom: 12px; }
+  .cat-card h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--c-text); }
+  .cat-card p { font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.5; }
+  .cat-card:hover h3 { color: var(--c-accent); }
+
+  /* Posts */
+  .post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .post-card {
+    display: block;
+  }
+  .post-date {
+    font-size: 0.8rem;
+    color: var(--c-text-secondary);
+  }
+  .post-card h3 {
+    font-size: 1.15rem;
+    margin: 6px 0 4px;
+    color: var(--c-text);
+  }
+  .post-card p {
+    font-size: 0.9rem;
+    color: var(--c-text-secondary);
+    line-height: 1.5;
+  }
+  .post-tags {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .empty {
+    text-align: center;
+    color: var(--c-text-secondary);
+  }
+  .view-all {
+    text-align: center;
+    margin-top: 32px;
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">{SITE_TITLE}</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(251, 251, 253, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--c-text);
+    letter-spacing: -0.01em;
+  }
+  .logo:hover {
+    color: var(--c-accent);
+  }
+  nav {
+    display: flex;
+    gap: 8px;
+  }
+  nav a {
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: var(--c-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  nav a:hover,
+  nav a.active {
+    color: var(--c-text);
+    background: rgba(0, 0, 0, 0.04);
+  }
+</style>

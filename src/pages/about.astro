@@ -1,0 +1,104 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title="About | 吉福" description="关于我" />
+  </head>
+  <body>
+    <Header />
+    <main class="container">
+      <section class="about-header animate-in">
+        <h1>你好，我是<span class="gradient-text">吉福</span></h1>
+        <p class="tagline">南京理工大学 · 土木工程 · 大一</p>
+      </section>
+
+      <section class="about-content animate-in animate-in-delay-1">
+        <div class="card about-card">
+          <h2>现在在做什么</h2>
+          <p>土木工程专业大一学生，但不打算被专业定义。正在同时探索 AI/Python、外贸出海、内容创作三个方向。相信跨界组合能产生独特的竞争力。</p>
+        </div>
+
+        <div class="card about-card">
+          <h2>技能与经验</h2>
+          <div class="skill-list">
+            <div class="skill-item">
+              <strong>Python / AI</strong>
+              <p>正在学习机器学习、自动化工具开发</p>
+            </div>
+            <div class="skill-item">
+              <strong>外贸 & 出海</strong>
+              <p>有外贸实战经验，了解独立站运营</p>
+            </div>
+            <div class="skill-item">
+              <strong>Web 开发</strong>
+              <p>WordPress 经验，正在拓展到现代前端技术栈</p>
+            </div>
+            <div class="skill-item">
+              <strong>教培</strong>
+              <p>有教学和培训相关经验</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card about-card">
+          <h2>联系我</h2>
+          <p>邮箱：<a href="mailto:jjff54547@gmail.com">jjff54547@gmail.com</a></p>
+          <p>GitHub：<a href="https://github.com/jjff54547" target="_blank">jjff54547</a></p>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .about-header {
+    text-align: center;
+    padding: 64px 24px 32px;
+  }
+  .about-header h1 {
+    margin-bottom: 8px;
+  }
+  .tagline {
+    color: var(--c-text-secondary);
+    font-size: 1.1rem;
+  }
+  .about-content {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .about-card {
+    margin-bottom: 20px;
+  }
+  .about-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  .about-card p {
+    color: var(--c-text-secondary);
+    line-height: 1.7;
+  }
+  .skill-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .skill-item strong {
+    display: block;
+    margin-bottom: 2px;
+  }
+  .skill-item p {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  @media (max-width: 500px) {
+    .skill-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
