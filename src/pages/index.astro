@@ -66,7 +66,7 @@ const categories = [
           ) : (
             <div class="post-list">
               {latestPosts.map((post, i) => (
-                <a href={`/blog/${post.slug}`} class={`card post-card animate-in animate-in-delay-${i + 1}`}>
+                <a href={`/blog/${post.id}/`} class={`card post-card animate-in animate-in-delay-${i + 1}`}>
                   <span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
                   <h3>{post.data.title}</h3>
                   <p>{post.data.description}</p>
