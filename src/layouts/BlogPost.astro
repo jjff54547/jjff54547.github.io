@@ -19,6 +19,11 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
     <main class="container">
       <article class="prose">
         <header class="post-header">
+          {heroImage && (
+            <div class="hero-image">
+              <img src={heroImage.src} alt={title} />
+            </div>
+          )}
           <div class="post-meta">
             <FormattedDate date={pubDate} />
             {updatedDate && <span class="updated"> · 更新于 <FormattedDate date={updatedDate} /></span>}
@@ -52,6 +57,16 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
     font-size: 0.85rem;
     color: var(--c-text-secondary);
     margin-bottom: 12px;
+  }
+  .hero-image {
+    margin-bottom: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
   .post-meta .updated { font-style: italic; }
   .post-header h1 {
